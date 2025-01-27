@@ -1,5 +1,14 @@
 import { fontSizes, fontWeightItems } from './constants';
-
+export interface FontDescriptor {
+  readonly path: string;
+  readonly style: string;
+  readonly width: number;
+  readonly family: string;
+  readonly weight: number;
+  readonly italic: boolean;
+  readonly monospace: boolean;
+  readonly postscriptName: string;
+}
 export interface Postscript {
   name: string;
   favorite: boolean;

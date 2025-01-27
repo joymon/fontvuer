@@ -20,6 +20,10 @@ You can preview fonts that installed.
 
 You can see in [screenshots](./screenshots/screenshots.md).
 
+## Points to note
+
+- Incase there is an `Error: Electron failed to install correctly, please delete node_modules/electron and try installing again`, please install electron separately using `npm install electron` command
+
 ## Contribution
 
 You must use `node.js 10` for building a native dependency(`font-manager`).

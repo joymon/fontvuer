@@ -38,10 +38,9 @@ export default class VFontList extends Vue {
 
   private state: State = store.state;
 
-  created(): void {
-    getFontListFromManager()
-      .then((res) => { this.fontArray = res; })
-      .catch(console.error);
+  async created(): Promise<void> {
+    console.log('VFontListCreated');
+    this.fontArray = await getFontListFromManager();
   }
 
   get targetFontArray(): FontFamily[] {

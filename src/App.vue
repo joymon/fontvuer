@@ -97,6 +97,7 @@ export default class App extends Vue {
         remote.shell.openExternal('https://fontvuer.netlify.com/#download');
       }
     });
+    console.log('fontvuer app created');
   }
 
   @Watch('state.darkMode', { immediate: true })
