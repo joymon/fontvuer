@@ -5,24 +5,24 @@ import getSystemFonts from 'get-system-fonts';
 import { FontDescriptor, FontFamily, Postscript } from './types';
 
 const estore = new Store();
-// if (FontManager) {
-//   const systemFontsManager = FontManager();
-//   console.log('FontManager created');
-//   systemFontsManager.getFontsExtended();
-// } else {
-//   console.log('FontManager not found');
-// }
+const errorBuf2Str = (buf: Buffer) => Array(buf.length)
+  .fill(0)
+  .map((_, i) => (((buf as Buffer)[i] !== 0) ? Buffer.from([buf[i]]).toString() : ''))
+  .join('');
 const getFontDescripters = async (): Promise<FontDescriptor[]> => {
-  const fontDescripters: FontDescriptor[] = [] as FontDescriptor[];
+  const fontDescriptors: FontDescriptor[] = [] as FontDescriptor[];
   console.log('start getFontDescripters()');
+  // const systemFonts = await getSystemFonts({ additionalFolders: ['C:\\temp\\Unicode Fonts'] });
   const systemFonts = await getSystemFonts();
   console.log('systemFonts length', systemFonts.length);
 
   systemFonts.forEach((fontPath) => {
     try {
       const font: Font = fontkit.openSync(fontPath);
-      fontDescripters.push({
-        family: font.familyName,
+      let altFamilyName = font.familyName as string | Buffer;
+      if (altFamilyName instanceof Buffer) altFamilyName = errorBuf2Str(altFamilyName);
+      fontDescriptors.push({
+        family: altFamilyName,
         path: fontPath,
         postscriptName: font.postscriptName,
         italic: font.italicAngle !== 0,
@@ -33,13 +33,9 @@ const getFontDescripters = async (): Promise<FontDescriptor[]> => {
     }
   });
   //   .sort((a, b) => ((a.postscriptName < b.postscriptName) ? -1 : 1));
-  return fontDescripters;
+  return fontDescriptors;
 };
 
-const errorBuf2Str = (buf: Buffer) => Array(buf.length)
-  .fill(0)
-  .map((_, i) => (((buf as Buffer)[i] !== 0) ? Buffer.from([buf[i]]).toString() : ''))
-  .join('');
 function getFamilyNameFromFontFile(fd: FontDescriptor) {
   let altFamilyName: string | Buffer | undefined;
   try {
