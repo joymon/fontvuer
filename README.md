@@ -26,7 +26,7 @@ You can see in [screenshots](./screenshots/screenshots.md).
 
 ## Contribution
 
-You must use `node.js 10` for building a native dependency(`font-manager`).
+This is tested with `node.js 16` only. Higher node versions require significant changes in the application.
 
 1. Fork this repository.
 2. `npm install` to install dependencies.
